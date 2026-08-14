@@ -3,6 +3,7 @@
 Některé funkce aplikace:
 
 - 📱 Čisté a jednoduché rozhraní: soustřeďte se na své zásilky, ne na to, jak používat aplikaci.
+- 🔗 Rychlé přidání: sdílejte sledovací odkaz v sekci „Zásilky“ nebo jej otevřete přímo a zásilku tak okamžitě přidejte.
 - 💬 Oznámení: získejte oznámení vždy, když se změní stav zásilky.
 - 🚫 Bez reklam a jiných nepříjemností.
 - 👥 Bezplatná a s otevřeným kódem: https://github.com/itsvic-dev/parcel
