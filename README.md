@@ -51,6 +51,7 @@ Europe:
 - An Post (IE)
 - Belpost (BY)
 - DPD Poland
+- FOXPOST (HU)
 - GLS Hungary
 - Hermes (DE)
 - InPost (PL)
