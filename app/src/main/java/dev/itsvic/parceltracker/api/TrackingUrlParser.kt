@@ -17,20 +17,18 @@ fun extractFirstUrl(rawText: String): String? =
 
 // Matches a full URL string against every in-scope provider's trackingUrlPatterns.
 fun parseTrackingUrl(url: String): TrackingUrlMatch? {
-    for (service in serviceOptions) {
-        val backend = getDeliveryService(service) ?: continue
-        for (pattern in backend.trackingUrlPatterns) {
-            val trackingId =
-                pattern.urlRegex.find(url)?.groupValues?.getOrNull(1)?.takeIf { it.isNotBlank() }
-                    ?: continue
-            val postalCode =
-                pattern.postalCodeRegex?.find(url)?.groupValues?.getOrNull(1)?.takeIf {
-                    it.isNotBlank()
-                }
-            return TrackingUrlMatch(service, trackingId, postalCode)
-        }
+  for (service in serviceOptions) {
+    val backend = getDeliveryService(service) ?: continue
+    for (pattern in backend.trackingUrlPatterns) {
+      val trackingId =
+          pattern.urlRegex.find(url)?.groupValues?.getOrNull(1)?.takeIf { it.isNotBlank() }
+              ?: continue
+      val postalCode =
+          pattern.postalCodeRegex?.find(url)?.groupValues?.getOrNull(1)?.takeIf { it.isNotBlank() }
+      return TrackingUrlMatch(service, trackingId, postalCode)
     }
-    return null
+  }
+  return null
 }
 
 // Convenience wrapper for ACTION_SEND: extracts a URL from raw text first.
