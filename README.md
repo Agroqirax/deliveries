@@ -53,6 +53,7 @@ Europe:
 - DPD Poland
 - FOXPOST (HU)
 - GLS Hungary
+- GLS Netherlands
 - Hermes (DE)
 - InPost (PL)
 - Magyar Posta (HU)
