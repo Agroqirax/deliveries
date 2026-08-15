@@ -22,15 +22,6 @@ object GLSGlobalDeliveryService : GLSDeliveryService(R.string.service_gls, "GROU
           TrackingUrlPattern(
               """https?://(?:www\.)?gls-group\.(?:eu|com)/\S*[?&]match=([A-Za-z0-9]+)"""
                   .toRegex(RegexOption.IGNORE_CASE)),
-          // Confirmed: verified againt real link
-          // Other country TLDs (de, fr, be, at, ...) may follow the same pattern but that's
-          // unverified, so not included here.
-          TrackingUrlPattern(
-              urlRegex =
-                  """https?://(?:www\.)?gls-info\.nl/tracking/ttlink\?\S*parcelNo=([A-Za-z0-9]+)"""
-                      .toRegex(RegexOption.IGNORE_CASE),
-              postalCodeRegex = """[?&]zipCode=([A-Za-z0-9]+)""".toRegex(RegexOption.IGNORE_CASE),
-          ),
       )
 }
 
