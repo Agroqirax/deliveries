@@ -3,6 +3,7 @@
      API 31+ (android:previewLayout). The host inflates this in its own process,
      so it cannot reuse ParcelWidgetContent — keep it visually in sync by hand. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_preview_background"
@@ -18,7 +19,8 @@
         android:contentDescription="@null"
         android:padding="8dp"
         android:src="@drawable/outline_local_shipping_24"
-        android:tint="@color/widget_preview_icon_tint" />
+        android:tint="@color/widget_preview_icon_tint"
+        tools:ignore="UseAppTint" />
 
     <LinearLayout
         android:layout_width="wrap_content"

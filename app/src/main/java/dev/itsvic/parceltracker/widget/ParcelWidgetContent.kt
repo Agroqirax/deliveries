@@ -85,29 +85,29 @@ fun ParcelWidgetContent(
             Row(
                 modifier = GlanceModifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically) {
-              Box(
-                  modifier =
-                      GlanceModifier.size(40.dp)
-                          .cornerRadius(20.dp)
-                          .background(GlanceTheme.colors.primaryContainer),
-                  contentAlignment = Alignment.Center) {
-                    Image(
-                        provider = ImageProvider(iconRes),
-                        contentDescription = statusText,
-                        colorFilter = ColorFilter.tint(GlanceTheme.colors.primary))
-                  }
+                  Box(
+                      modifier =
+                          GlanceModifier.size(40.dp)
+                              .cornerRadius(20.dp)
+                              .background(GlanceTheme.colors.primaryContainer),
+                      contentAlignment = Alignment.Center) {
+                        Image(
+                            provider = ImageProvider(iconRes),
+                            contentDescription = statusText,
+                            colorFilter = ColorFilter.tint(GlanceTheme.colors.primary))
+                      }
 
-              Column(modifier = GlanceModifier.padding(start = 12.dp)) {
-                Text(
-                    parcel.value.parcel.humanName,
-                    style = TextStyle(color = GlanceTheme.colors.onBackground))
-                Text(
-                    statusText,
-                    style =
-                        TextStyle(
-                            color = GlanceTheme.colors.onSurfaceVariant, fontSize = 12.sp))
-              }
-            }
+                  Column(modifier = GlanceModifier.padding(start = 12.dp)) {
+                    Text(
+                        parcel.value.parcel.humanName,
+                        style = TextStyle(color = GlanceTheme.colors.onBackground))
+                    Text(
+                        statusText,
+                        style =
+                            TextStyle(
+                                color = GlanceTheme.colors.onSurfaceVariant, fontSize = 12.sp))
+                  }
+                }
           }
         }
       }

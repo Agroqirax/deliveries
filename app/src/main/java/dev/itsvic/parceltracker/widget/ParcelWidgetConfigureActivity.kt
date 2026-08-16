@@ -73,10 +73,9 @@ class ParcelWidgetConfigureActivity : ComponentActivity() {
       val glanceId =
           GlanceAppWidgetManager(this@ParcelWidgetConfigureActivity).getGlanceIdBy(appWidgetId)
       updateAppWidgetState(
-          this@ParcelWidgetConfigureActivity, PreferencesGlanceStateDefinition, glanceId) { prefs
-        ->
-        prefs.toMutablePreferences().apply { this[widgetParcelIdKey] = parcelId }
-      }
+          this@ParcelWidgetConfigureActivity, PreferencesGlanceStateDefinition, glanceId) { prefs ->
+            prefs.toMutablePreferences().apply { this[widgetParcelIdKey] = parcelId }
+          }
 
       // Push the selection before returning a result. The host binds the widget id
       // (which starts a Glance session that composes with no parcel id set) before
