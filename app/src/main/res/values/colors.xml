@@ -3,4 +3,9 @@
     <color name="splash_background">#FFF8F6</color>
     <color name="splash_icon_background">#8D4D2D</color>
     <color name="splash_icon_foreground">#FFFFFF</color>
+    <color name="widget_preview_background">#FFF8F6</color>
+    <color name="widget_preview_icon_background">#FFDBCC</color>
+    <color name="widget_preview_icon_tint">#8D4D2D</color>
+    <color name="widget_preview_text">#221A16</color>
+    <color name="widget_preview_text_secondary">#52443D</color>
 </resources>

@@ -43,9 +43,11 @@ interface ParcelDao {
 
   @Query("SELECT * FROM parcel WHERE id=:id LIMIT 1") fun getById(id: Int): Flow<Parcel>
 
+  @Query("SELECT EXISTS(SELECT 1 FROM parcel WHERE id=:id)") suspend fun exists(id: Int): Boolean
+
   @Transaction
   @Query("SELECT * FROM Parcel WHERE id=:id")
-  fun getWithStatusById(id: Int): Flow<ParcelWithStatus>
+  fun getWithStatusById(id: Int): Flow<ParcelWithStatus?>
 
   @Insert suspend fun insert(parcel: Parcel): Long
 

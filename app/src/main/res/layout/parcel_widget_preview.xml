@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static stand-in for the widget, shown in the launcher's widget picker on
+     API 31+ (android:previewLayout). The host inflates this in its own process,
+     so it cannot reuse ParcelWidgetContent — keep it visually in sync by hand. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_preview_background"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/widget_preview_icon_background"
+        android:contentDescription="@null"
+        android:padding="8dp"
+        android:src="@drawable/outline_local_shipping_24"
+        android:tint="@color/widget_preview_icon_tint" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@string/widget_preview_parcel_name"
+            android:textColor="@color/widget_preview_text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@string/status_in_transit"
+            android:textColor="@color/widget_preview_text_secondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

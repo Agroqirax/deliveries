@@ -62,6 +62,7 @@ import dev.itsvic.parceltracker.ui.views.AddEditParcelView
 import dev.itsvic.parceltracker.ui.views.HomeView
 import dev.itsvic.parceltracker.ui.views.ParcelView
 import dev.itsvic.parceltracker.ui.views.SettingsView
+import dev.itsvic.parceltracker.widget.refreshParcelWidgets
 import java.time.LocalDateTime
 import java.time.ZoneId
 import kotlinx.coroutines.Dispatchers
@@ -77,7 +78,7 @@ class MainActivity : ComponentActivity() {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) handleNotificationPermissionStuff()
 
-    parcelToOpen = mutableIntStateOf(intent.getIntExtra("openParcel", -1))
+    parcelToOpen = mutableIntStateOf(intent.getIntExtra(EXTRA_OPEN_PARCEL, -1))
 
     setContent {
       val parcelToOpen by parcelToOpen
@@ -96,7 +97,7 @@ class MainActivity : ComponentActivity() {
 
   override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
-    parcelToOpen.intValue = intent.getIntExtra("openParcel", -1)
+    parcelToOpen.intValue = intent.getIntExtra(EXTRA_OPEN_PARCEL, -1)
   }
 
   @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -204,6 +205,21 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
 
       val dbParcel = parcelWithStatus?.parcel
 
+      LaunchedEffect(route.parcelDbId, demoMode) {
+        // A deep link (widget tap, notification tap) can point at a parcel
+        // that's since been deleted elsewhere. Rather than getting stuck on
+        // an infinite spinner, bail out to the home screen once we've
+        // confirmed it's genuinely gone (a one-shot check, since the reactive
+        // Flow above also reports null transiently before its first real
+        // emission arrives).
+        val stillExists =
+            if (demoMode) demoModeParcels.getOrNull(route.parcelDbId) != null
+            else db.parcelDao().exists(route.parcelDbId)
+        if (!stillExists) {
+          navController.popBackStack(HomePage, false)
+        }
+      }
+
       LaunchedEffect(parcelWithStatus) {
         if (dbParcel != null && !dbParcel.isArchived) {
           fun apiParcelError(description: String, status: Status): APIParcel {
@@ -233,6 +249,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
                 } else {
                   db.parcelStatusDao().update(status)
                 }
+                context.refreshParcelWidgets()
               }
             } catch (e: IOException) {
               Log.w("MainActivity", "Failed fetch: $e")
@@ -292,6 +309,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
 
                 scope.launch(Dispatchers.IO) {
                   deleteParcel(dbParcel)
+                  context.refreshParcelWidgets()
                   scope.launch { navController.popBackStack(HomePage, false) }
                 }
               },
@@ -313,6 +331,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
                                 parcelId = dbParcel.id,
                             )
                           })
+                  context.refreshParcelWidgets()
                 }
               },
               onArchivePromptDismissal = {
@@ -339,6 +358,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
 
             scope.launch(Dispatchers.IO) {
               val id = db.parcelDao().insert(it)
+              context.refreshParcelWidgets()
               scope.launch {
                 navController.navigate(route = ParcelPage(id.toInt())) { popUpTo(HomePage) }
               }
@@ -372,6 +392,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
 
             scope.launch(Dispatchers.IO) {
               db.parcelDao().update(it)
+              context.refreshParcelWidgets()
               scope.launch { navController.popBackStack() }
             }
           },

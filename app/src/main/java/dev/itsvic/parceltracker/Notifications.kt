@@ -24,7 +24,7 @@ fun Context.sendNotification(parcel: Parcel, status: Status, event: ParcelHistor
 
   val intent =
       Intent(this, MainActivity::class.java).apply {
-        putExtra("openParcel", parcel.id)
+        putExtra(EXTRA_OPEN_PARCEL, parcel.id)
         flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
       }
   val pendingIntent =

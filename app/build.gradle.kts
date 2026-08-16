@@ -111,6 +111,8 @@ dependencies {
   implementation(libs.work.runtime.ktx)
   implementation(libs.kotlinx.coroutines.guava)
   implementation(libs.androidx.browser)
+  implementation(libs.androidx.glance.appwidget)
+  implementation(libs.androidx.glance.material3)
 
   ksp(libs.room.compiler)
   ksp(libs.moshi.kotlin.codegen)

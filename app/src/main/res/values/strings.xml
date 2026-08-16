@@ -110,4 +110,10 @@
   <string name="tracking_id_error_text">Tracking ID must not be blank.</string>
   <string name="unmetered_only_setting">Update only on unmetered networks</string>
   <string name="unmetered_only_setting_detail">If enabled, Deliveries will look for parcel updates only on unmetered connections, such as your home Wi-Fi.</string>
+  <string name="widget_label">Parcel status</string>
+  <string name="widget_description">Shows the latest status of one parcel.</string>
+  <string name="widget_not_configured">Tap to choose a parcel</string>
+  <string name="widget_parcel_not_found">Parcel not found. Tap to choose another</string>
+  <string name="widget_configure_title">Choose a parcel</string>
+  <string name="widget_preview_parcel_name" translatable="false">Phone case</string>
 </resources>
