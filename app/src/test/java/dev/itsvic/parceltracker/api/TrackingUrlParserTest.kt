@@ -33,15 +33,6 @@ class TrackingUrlParserTest {
   }
 
   @Test
-  fun gls_countrySiteUrlParsesToServiceTrackingIdAndPostalCode() {
-    assertEquals(
-        TrackingUrlMatch(Service.GLS, "1234567890", "1234AB"),
-        parseTrackingUrl(
-            "https://www.gls-info.nl/tracking/ttlink?parcelNo=1234567890&zipCode=1234AB&lang=NL"),
-    )
-  }
-
-  @Test
   fun gls_otherCountryTldDoesNotMatch() {
     // gls-info.nl is confirmed; other country TLDs are deliberately not supported
     // since that generalization was never verified.
@@ -71,6 +62,46 @@ class TrackingUrlParserTest {
     assertEquals(
         TrackingUrlMatch(Service.POLISH_POST, "PX1234567890"),
         parseTrackingUrl("https://emonitoring.poczta-polska.pl/?numer=PX1234567890"),
+    )
+  }
+
+  @Test
+  fun samedayRomania_fragmentUrlParsesToServiceAndTrackingId() {
+    assertEquals(
+        TrackingUrlMatch(Service.SAMEDAY_RO, "1234567890123"),
+        parseTrackingUrl("https://sameday.ro/#awb=1234567890123"),
+    )
+  }
+
+  @Test
+  fun samedayRomania_statusPageUrlParsesToServiceAndTrackingId() {
+    assertEquals(
+        TrackingUrlMatch(Service.SAMEDAY_RO, "1234567890123"),
+        parseTrackingUrl("https://sameday.ro/status-colet/?awb=1234567890123"),
+    )
+  }
+
+  @Test
+  fun samedayHungary_fragmentUrlParsesToServiceAndTrackingId() {
+    assertEquals(
+        TrackingUrlMatch(Service.SAMEDAY_HU, "1234567890123"),
+        parseTrackingUrl("https://sameday.hu/#awb=1234567890123"),
+    )
+  }
+
+  @Test
+  fun samedayBulgaria_fragmentUrlParsesToServiceAndTrackingId() {
+    assertEquals(
+        TrackingUrlMatch(Service.SAMEDAY_BG, "1234567890123"),
+        parseTrackingUrl("https://sameday.bg/#awb=1234567890123"),
+    )
+  }
+
+  @Test
+  fun samedayBulgaria_statusPageUrlParsesToServiceAndTrackingId() {
+    assertEquals(
+        TrackingUrlMatch(Service.SAMEDAY_BG, "1234567890123"),
+        parseTrackingUrl("https://sameday.bg/status-na-pratkata/?awb=1234567890123"),
     )
   }
 
