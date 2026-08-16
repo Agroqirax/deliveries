@@ -116,4 +116,6 @@
   <string name="widget_parcel_not_found">Parcel not found. Tap to choose another</string>
   <string name="widget_configure_title">Choose a parcel</string>
   <string name="widget_preview_parcel_name" translatable="false">Phone case</string>
+  <string name="tile_label">Parcel status</string>
+  <string name="tile_no_parcels">No parcels</string>
 </resources>

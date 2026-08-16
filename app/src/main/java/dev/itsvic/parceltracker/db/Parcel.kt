@@ -49,6 +49,16 @@ interface ParcelDao {
   @Query("SELECT * FROM Parcel WHERE id=:id")
   fun getWithStatusById(id: Int): Flow<ParcelWithStatus?>
 
+  @Transaction
+  @Query(
+      """
+      SELECT parcel.* FROM parcel
+      JOIN parcelstatus ON parcelstatus.parcelId = parcel.id
+      WHERE parcel.isArchived = 0
+      ORDER BY parcelstatus.lastChange DESC LIMIT 1
+      """)
+  suspend fun getMostRecentlyUpdatedNonArchived(): ParcelWithStatus?
+
   @Insert suspend fun insert(parcel: Parcel): Long
 
   @Update suspend fun update(parcel: Parcel)

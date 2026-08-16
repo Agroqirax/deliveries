@@ -13,6 +13,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import dev.itsvic.parceltracker.api.getParcel
 import dev.itsvic.parceltracker.db.ParcelStatus
+import dev.itsvic.parceltracker.tile.refreshParcelTile
 import dev.itsvic.parceltracker.widget.refreshParcelWidgets
 import java.time.ZoneId
 import java.util.concurrent.TimeUnit
@@ -69,6 +70,7 @@ class NotificationWorker(context: Context, params: WorkerParameters) :
     }
 
     applicationContext.refreshParcelWidgets()
+    applicationContext.refreshParcelTile()
 
     return Result.success()
   }

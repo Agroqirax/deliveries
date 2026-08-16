@@ -57,6 +57,7 @@ import dev.itsvic.parceltracker.db.ParcelStatus
 import dev.itsvic.parceltracker.db.ParcelWithStatus
 import dev.itsvic.parceltracker.db.deleteParcel
 import dev.itsvic.parceltracker.db.demoModeParcels
+import dev.itsvic.parceltracker.tile.refreshParcelTile
 import dev.itsvic.parceltracker.ui.theme.ParcelTrackerTheme
 import dev.itsvic.parceltracker.ui.views.AddEditParcelView
 import dev.itsvic.parceltracker.ui.views.HomeView
@@ -250,6 +251,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
                   db.parcelStatusDao().update(status)
                 }
                 context.refreshParcelWidgets()
+                context.refreshParcelTile()
               }
             } catch (e: IOException) {
               Log.w("MainActivity", "Failed fetch: $e")
@@ -310,6 +312,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
                 scope.launch(Dispatchers.IO) {
                   deleteParcel(dbParcel)
                   context.refreshParcelWidgets()
+                  context.refreshParcelTile()
                   scope.launch { navController.popBackStack(HomePage, false) }
                 }
               },
@@ -332,6 +335,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
                             )
                           })
                   context.refreshParcelWidgets()
+                  context.refreshParcelTile()
                 }
               },
               onArchivePromptDismissal = {
@@ -359,6 +363,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
             scope.launch(Dispatchers.IO) {
               val id = db.parcelDao().insert(it)
               context.refreshParcelWidgets()
+              context.refreshParcelTile()
               scope.launch {
                 navController.navigate(route = ParcelPage(id.toInt())) { popUpTo(HomePage) }
               }
@@ -393,6 +398,7 @@ fun ParcelAppNavigation(parcelToOpen: Int) {
             scope.launch(Dispatchers.IO) {
               db.parcelDao().update(it)
               context.refreshParcelWidgets()
+              context.refreshParcelTile()
               scope.launch { navController.popBackStack() }
             }
           },
