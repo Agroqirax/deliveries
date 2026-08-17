@@ -50,6 +50,7 @@
                 <data android:scheme="https" android:host="www.ups.com" />
                 <data android:scheme="https" android:host="gls-group.eu" />
                 <data android:scheme="https" android:host="gls-group.com" />
+                <data android:scheme="https" android:host="www.gls-info.nl" />
                 <data android:scheme="https" android:host="inpost.pl" />
                 <data android:scheme="https" android:host="www.inpost.pl" />
                 <data android:scheme="https" android:host="jouw.postnl.nl" />

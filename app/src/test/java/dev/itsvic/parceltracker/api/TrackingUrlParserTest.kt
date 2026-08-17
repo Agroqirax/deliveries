@@ -42,6 +42,15 @@ class TrackingUrlParserTest {
   }
 
   @Test
+  fun glsNetherlands_urlParsesToServiceTrackingIdAndPostalCode() {
+    assertEquals(
+        TrackingUrlMatch(Service.GLS_NETHERLANDS, "00000000000000", "1234AB"),
+        parseTrackingUrl(
+            "https://www.gls-info.nl/tracking/ttlink?parcelNo=00000000000000&zipCode=1234AB&lang=NL"),
+    )
+  }
+
+  @Test
   fun inpost_urlParsesToServiceAndTrackingId() {
     assertEquals(
         TrackingUrlMatch(Service.INPOST, "123456789012345678901234"),
