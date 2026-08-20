@@ -20,6 +20,7 @@ import dev.itsvic.parceltracker.ParcelApplication
 import dev.itsvic.parceltracker.dataStore
 import dev.itsvic.parceltracker.db.ParcelWithStatus
 import dev.itsvic.parceltracker.db.demoModeParcels
+import java.time.Instant
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -31,6 +32,9 @@ import kotlinx.coroutines.flow.map
 val widgetParcelIdKey = intPreferencesKey("parcelId")
 
 const val WIDGET_UNCONFIGURED = -1
+
+/** Not a real parcel id: shows whichever non-archived parcel last changed status. */
+const val WIDGET_LATEST_UPDATE = -2
 
 /** What a widget instance knows about its parcel at a given moment. */
 sealed interface WidgetParcel {
@@ -81,8 +85,14 @@ private fun widgetParcelFlow(context: Context, parcelId: Int): Flow<WidgetParcel
       .map { it[DEMO_MODE] == true }
       .distinctUntilChanged()
       .flatMapLatest { demoMode ->
-        if (demoMode) flowOf(demoModeParcels.getOrNull(parcelId))
-        else ParcelApplication.db.parcelDao().getWithStatusById(parcelId)
+        when {
+          parcelId == WIDGET_LATEST_UPDATE && demoMode ->
+              flowOf(demoModeParcels.maxByOrNull { it.status?.lastChange ?: Instant.MIN })
+          parcelId == WIDGET_LATEST_UPDATE ->
+              ParcelApplication.db.parcelDao().getMostRecentlyUpdatedNonArchivedFlow()
+          demoMode -> flowOf(demoModeParcels.getOrNull(parcelId))
+          else -> ParcelApplication.db.parcelDao().getWithStatusById(parcelId)
+        }
       }
       .map { if (it != null) WidgetParcel.Found(it) else WidgetParcel.NotFound }
       .catch {

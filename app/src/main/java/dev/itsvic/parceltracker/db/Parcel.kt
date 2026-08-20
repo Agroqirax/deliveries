@@ -14,6 +14,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import dev.itsvic.parceltracker.api.Service
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 
 @Entity
 data class Parcel(
@@ -57,7 +58,10 @@ interface ParcelDao {
       WHERE parcel.isArchived = 0
       ORDER BY parcelstatus.lastChange DESC LIMIT 1
       """)
-  suspend fun getMostRecentlyUpdatedNonArchived(): ParcelWithStatus?
+  fun getMostRecentlyUpdatedNonArchivedFlow(): Flow<ParcelWithStatus?>
+
+  suspend fun getMostRecentlyUpdatedNonArchived(): ParcelWithStatus? =
+      getMostRecentlyUpdatedNonArchivedFlow().first()
 
   @Insert suspend fun insert(parcel: Parcel): Long
 
